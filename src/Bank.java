@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -27,5 +29,18 @@ public class Bank {
     public Account highestAccount() {
         Collections.sort(accounts);
         return accounts.get(0);
+    }
+
+    public void addIRToAccounts() {
+        LocalDate ld = LocalDate.now();
+        for (Account a : accounts ) {
+            if (Period.between(a.getAmountInserted(),ld).getDays() > ld.getMonthValue()) {
+                a.insertAmount((a.computeIR()), ld);
+                System.out.println(" accountdate ok " + a.getAmountInserted() + " so " + a.computeIR());
+
+            } else {
+                System.out.println(" accountdate too recent" + a.getAmountInserted());
+            }
+        }
     }
 }
